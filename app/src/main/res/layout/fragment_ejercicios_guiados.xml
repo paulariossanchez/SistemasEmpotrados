@@ -2,11 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <!-- ListView para mostrar los ejercicios -->
-    <ListView
-        android:id="@+id/listViewEjercicios"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewEjercicios"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
 </LinearLayout>

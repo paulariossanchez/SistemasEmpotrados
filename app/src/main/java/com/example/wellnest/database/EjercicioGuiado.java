@@ -11,4 +11,17 @@ public class EjercicioGuiado {
     public String nombre;
     public String urlVideo; // Puede ser null si no hay video
     public String instrucciones; // Puede ser null si no hay instrucciones
+
+
+    public EjercicioGuiado(String nombre, String urlVideo, String instrucciones) {
+
+        this.nombre = nombre;
+        this.urlVideo = urlVideo;
+        this.instrucciones = instrucciones;
+    }
+
+
+    public EjercicioGuiado() {
+
+    }
 }

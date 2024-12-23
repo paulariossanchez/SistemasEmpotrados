@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_nav_menu">
+    <item
+        android:id="@+id/nav_registro_diario"
+        android:icon="@drawable/ic_registro_diario"
+    android:title="Registro Diario"
+    app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/nav_ejercicios_guiados"
+        android:icon="@drawable/ic_ejercicios"
+    android:title="Ejercicios Guiados"
+    app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/nav_estadisticas"
+        android:icon="@drawable/ic_estadisticas"
+    android:title="Estadisticas"
+    app:showAsAction="ifRoom" />
+
+</menu>

@@ -9,7 +9,7 @@ import java.util.List;
 @Dao
 public interface EjercicioGuiadoDao {
     @Insert
-    void insertEjercicio(EjercicioGuiado ejercicio);
+    default void insertEjercicio(EjercicioGuiado ejercicioGuiado){};
 
     @Query("SELECT * FROM EjercicioGuiado")
     List<EjercicioGuiado> getAllEjercicios();
