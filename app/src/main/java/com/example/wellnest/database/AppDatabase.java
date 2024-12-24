@@ -22,17 +22,8 @@ public abstract class AppDatabase extends RoomDatabase {
                         instance = Room.databaseBuilder(context.getApplicationContext(),
                                         AppDatabase.class, "wellnest_database")
                                 .fallbackToDestructiveMigration()
-                                .allowMainThreadQueries() // Solo para pruebas; evita en producción
-                                .addCallback(new RoomDatabase.Callback() {
-                                        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                                                super.onCreate(db);
-                                                Executors.newSingleThreadExecutor().execute(() -> {
-                                                        EjercicioGuiadoDao dao = instance.ejercicioGuiadoDao();
-                                                        dao.insertEjercicio(new EjercicioGuiado("Ejercicio 1", null, "Instrucciones del ejercicio 1"));
-                                                        dao.insertEjercicio(new EjercicioGuiado("Ejercicio 2", null, "Instrucciones del ejercicio 2"));
-                                                });
-                                        }
-                                })
+                                .allowMainThreadQueries()
+                                .addCallback(roomCallback)
                                 .build();
                 }
                 return instance;
@@ -46,5 +37,33 @@ public abstract class AppDatabase extends RoomDatabase {
         // Otros DAOs se pueden agregar aquí
         public abstract EjercicioGuiadoDao ejercicioGuiadoDao();
 
+        // Callback para insertar datos iniciales
+        private static final Callback roomCallback = new Callback() {
+                @Override
+                public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                        super.onCreate(db);
+                        Executors.newSingleThreadExecutor().execute(() -> {
+                                EjercicioGuiadoDao dao = instance.ejercicioGuiadoDao();
+                                dao.insertEjercicio(new EjercicioGuiado("Meditación en 5 minutos", "https://www.youtube.com/watch?v=inpok4MKVLM", null));
+                                dao.insertEjercicio(new EjercicioGuiado("Relajación antes de dormir", "https://www.youtube.com/watch?v=_VHO3dEsdj0", null));
+                                dao.insertEjercicio(new EjercicioGuiado("Ejercicio 5-4-3-2-1", null, "5 cosas que puedas ver:\n" +
+                                        "Mira a tu alrededor y nombra cinco cosas que puedas ver.\n" +
+                                        "(Ejemplo: una lámpara, un cuadro, una planta...)\n\n" +
+                                        "4 cosas que puedas tocar:\n" +
+                                        "Nota cuatro texturas o superficies que puedas sentir.\n" +
+                                        "(Ejemplo: la ropa, la mesa, una silla...)\n\n" +
+                                        "3 cosas que puedas escuchar:\n" +
+                                        "Identifica tres sonidos que puedas oír ahora mismo.\n" +
+                                        "(Ejemplo: el viento, un reloj, tu respiración...)\n\n" +
+                                        "2 cosas que puedas oler:\n" +
+                                        "Encuentra dos olores presentes o piensa en tus olores favoritos.\n" +
+                                        "(Ejemplo: café, perfume...)\n" +
+                                        "(Si no hay olores cerca, recuerda uno que te guste).\n\n" +
+                                        "1 cosa que puedas saborear:\n" +
+                                        "Nota un sabor presente o piensa en algo que te guste.\n" +
+                                        "(Ejemplo: agua, un chicle...)"));
+                        });
+                }
+        };
 
 }

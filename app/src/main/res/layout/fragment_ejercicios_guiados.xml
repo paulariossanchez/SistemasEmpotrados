@@ -1,13 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Título -->
+    <TextView
+        android:id="@+id/tituloEjerciciosGuiados"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ejercicios Guiados"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Subtítulo -->
+    <TextView
+        android:id="@+id/subtituloEjerciciosGuiados"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Selecciona un ejercicio para empezar a relajarte"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"
+        android:textColor="#666666" />
+
+    <!-- RecyclerView para las tarjetas -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewEjercicios"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical" />
+
 </LinearLayout>
