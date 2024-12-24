@@ -33,12 +33,13 @@ public class EjerciciosGuiadosFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         // Obtener los ejercicios desde la base de datos
+        Log.i(TAG, " AppDatabase.getInstance");
         AppDatabase db = AppDatabase.getInstance(requireContext());
         EjercicioGuiado ejercicio1 = new EjercicioGuiado("Meditación en 5 minutos", "https://www.youtube.com/watch?v=inpok4MKVLM", null);
         db.ejercicioGuiadoDao().insertEjercicio(ejercicio1);
 
         List<EjercicioGuiado> ejercicios = db.ejercicioGuiadoDao().getAllEjercicios();
-        Log.i(TAG, "Ejercicios: " + ejercicios.toString());
+        Log.i(TAG, "Ejercicios: " + ejercicios.size());
 
         // Configurar el adaptador con las tarjetas
         EjerciciosAdapter adapter = new EjerciciosAdapter(requireContext(), ejercicios);
