@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.wellnest"
-        minSdk 34
+        minSdkVersion 26
         targetSdk 34
         versionCode 1
         versionName "1.0"
