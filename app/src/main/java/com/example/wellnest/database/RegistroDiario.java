@@ -18,4 +18,15 @@ public class RegistroDiario {
     public Emocion emocion;
 
     public Date fecha;
+
+    public RegistroDiario(long l, Emocion emocion, String respuestaPregunta1, String respuestaPregunta2) {
+        this.emocion = emocion;
+        this.respuestaPregunta1 = respuestaPregunta1;
+        this.respuestaPregunta2 = respuestaPregunta2;
+        this.fecha = new Date(l);
+    }
+
+    public RegistroDiario() {
+
+    }
 }
