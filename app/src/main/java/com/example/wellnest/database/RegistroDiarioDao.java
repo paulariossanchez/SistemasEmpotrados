@@ -13,4 +13,8 @@ public interface RegistroDiarioDao {
 
     @Query("SELECT * FROM RegistroDiario WHERE fecha = :fecha")
     List<RegistroDiario> getRegistrosByFecha(String fecha);
+
+    @Query("SELECT * FROM RegistroDiario WHERE DATE(fecha / 1000, 'unixepoch') = DATE('now')")
+    RegistroDiario getRegistroDelDia();
+
 }

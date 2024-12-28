@@ -16,7 +16,7 @@ public class RegistroDiario {
 
     @TypeConverters(EmocionConverter.class)
     public Emocion emocion;
-
+    @TypeConverters(DateConverter.class)
     public Date fecha;
 
     public RegistroDiario(long l, Emocion emocion, String respuestaPregunta1, String respuestaPregunta2) {
