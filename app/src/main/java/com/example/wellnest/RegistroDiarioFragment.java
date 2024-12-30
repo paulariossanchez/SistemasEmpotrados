@@ -15,12 +15,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.wellnest.database.AppDatabase;
 import com.example.wellnest.database.Emocion;
 import com.example.wellnest.database.RegistroDiario;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Date;
 
@@ -112,15 +116,39 @@ public class RegistroDiarioFragment extends Fragment {
 
             // Actualizar la interfaz en el hilo principal
             requireActivity().runOnUiThread(() -> {
-                // Mostrar mensaje y ocultar el formulario
+                if (esEmocionNegativa(emocion)) {
+                    Toast.makeText(getContext(), "Puedes hacer estos ejercicios para relajarte", Toast.LENGTH_LONG).show();
+                    cambiarATabEjercicios(); // Cambiar a la pestaña de ejercicios
+                } else {
+                    Toast.makeText(getContext(), "Registro guardado exitosamente", Toast.LENGTH_SHORT).show();
+                }
+
+                // Ocultar el formulario y mostrar mensaje de confirmación
                 textoRegistrado.setVisibility(View.VISIBLE);
                 emocionSpinner.setVisibility(View.GONE);
                 gratitud1.setVisibility(View.GONE);
                 gratitud2.setVisibility(View.GONE);
                 guardarButton.setVisibility(View.GONE);
-
-                Toast.makeText(getContext(), "Registro guardado exitosamente", Toast.LENGTH_SHORT).show();
             });
         }).start();
+    }
+
+    // Metodo para verificar si la emoción es negativa
+    private boolean esEmocionNegativa(String emocion) {
+        // Define aquí tus emociones negativas
+        List<String> emocionesNegativas = Arrays.asList("Triste", "Enfadado", "Ansioso", "Estresado","Nervioso", "Irritable");
+        return emocionesNegativas.contains(emocion);
+    }
+
+    // Metodo para cambiar a la pestaña de ejercicios guiados
+    private void cambiarATabEjercicios() {
+        NavHostFragment navHostFragment = (NavHostFragment) requireActivity()
+                .getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment);
+
+        if (navHostFragment != null) {
+            NavController navController = navHostFragment.getNavController();
+            navController.navigate(R.id.nav_ejercicios_guiados); // Cambia al ID de tu destino de ejercicios guiados
+        }
     }
 }
