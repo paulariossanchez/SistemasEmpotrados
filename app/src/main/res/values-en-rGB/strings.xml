@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Wellnest</string>
+    <string name="change_language">Change Language</string>
+    <string name="fragment_registro_diario.xml">Daily Record</string>
+    <string name="fragment_ejercicios_guiados">Guided Exercises</string>
+    <string name="fragment_estadisticas">Statistics</string>
+    <string name="emociones_mensaje">A chart of your recent emotions is shown above</string>
 </resources>

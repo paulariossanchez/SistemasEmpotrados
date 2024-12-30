@@ -1,4 +1,10 @@
 <resources>
-    <string name="app_name">Wellnest</string>
+    <string name="app_name">WellNest</string>
     <string name="change_language">Cambiar idioma</string>
+    <string name="fragment_registro_diario.xml">Registro Diario</string>
+    <string name="fragment_ejercicios_guiados">Ejercicios Guiados</string>
+    <string name="fragment_estadisticas">Estadísticas</string>
+    <string name="emociones_mensaje">Arriba se muestra un gráfico de tus últimas emociones</string>
+
+
 </resources>

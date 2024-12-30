@@ -1,5 +1,6 @@
 package com.example.wellnest;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
@@ -51,6 +52,6 @@ public class MainActivity extends AppCompatActivity {
         config.setLocale(locale);
 
         getResources().updateConfiguration(config, getResources().getDisplayMetrics());
-        recreate(); // Reinicia la actividad actual
+        recreate(); // Reinicia la actividad actual para aplicar el cambio de idioma
     }
 }
