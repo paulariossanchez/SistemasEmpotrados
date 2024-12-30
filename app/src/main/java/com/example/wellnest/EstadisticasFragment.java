@@ -23,7 +23,6 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,6 +39,7 @@ public class EstadisticasFragment extends Fragment {
     private BarChart barChart;
     private LinearLayout emotionsContainer;
     private CalendarView calendarView;
+    private TextView emocionesMensaje;
     private final Executor executor = Executors.newSingleThreadExecutor();
 
     @Nullable
@@ -60,6 +60,9 @@ public class EstadisticasFragment extends Fragment {
         barChart = view.findViewById(R.id.bar_chart);
         emotionsContainer = view.findViewById(R.id.emotions_container);
         calendarView = view.findViewById(R.id.calendar_view);
+        emocionesMensaje = view.findViewById(R.id.emociones_mensaje);
+
+        emocionesMensaje.setText("Arriba se muestra un gráfico de tus últimas emociones");
     }
 
     private void setupChart() {
@@ -148,7 +151,7 @@ public class EstadisticasFragment extends Fragment {
             try {
                 AppDatabase db = AppDatabase.getInstance(requireContext());
                 List<RegistroDiario> registros = db.registroDiarioDao().getTodosLosRegistros();
-                Map<Long, Emocion> emocionesPorDia = mapearEmocionesPorDia(registros);
+                Map<Long, String> emocionesPorDia = mapearEmocionesPorDia(registros);
 
                 requireActivity().runOnUiThread(() ->
                         configurarCalendarView(emocionesPorDia));
@@ -158,32 +161,50 @@ public class EstadisticasFragment extends Fragment {
         });
     }
 
-    private Map<Long, Emocion> mapearEmocionesPorDia(List<RegistroDiario> registros) {
-        Map<Long, Emocion> emocionesPorDia = new HashMap<>();
+    private Map<Long, String> mapearEmocionesPorDia(List<RegistroDiario> registros) {
+        Map<Long, String> emocionesPorDia = new HashMap<>();
+        Map<Emocion, String> emocionEmojis = getEmocionEmojis();
+
         for (RegistroDiario registro : registros) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(registro.fecha);
             calendar.set(Calendar.HOUR_OF_DAY, 0);
-            emocionesPorDia.put(calendar.getTimeInMillis(), registro.emocion);
+            emocionesPorDia.put(calendar.getTimeInMillis(), emocionEmojis.getOrDefault(registro.emocion, ""));
         }
         return emocionesPorDia;
     }
 
-    private void configurarCalendarView(Map<Long, Emocion> emocionesPorDia) {
+    private void configurarCalendarView(Map<Long, String> emocionesPorDia) {
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             Calendar selectedDate = Calendar.getInstance();
             selectedDate.set(year, month, dayOfMonth, 0, 0, 0);
             long selectedMillis = selectedDate.getTimeInMillis();
 
-            Emocion emocion = emocionesPorDia.get(selectedMillis);
+            String emocion = emocionesPorDia.get(selectedMillis);
             String mensaje = (emocion != null) ?
-                    "Emoción registrada: " + emocion.name() :
+                    "Emoción registrada: " + emocion :
                     "No hay emoción registrada para este día";
             Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
         });
+
+        // Configuración adicional para mostrar emociones en el calendario (requiere personalización avanzada)
     }
 
     private void loadEmotions() {
+        Map<Emocion, String> emocionEmojis = getEmocionEmojis();
+
+        emotionsContainer.removeAllViews();
+        for (Emocion emocion : Emocion.values()) {
+            TextView emojiText = new TextView(requireContext());
+            emojiText.setText(emocionEmojis.getOrDefault(emocion, "😐"));
+            emojiText.setTextSize(24);
+            emojiText.setOnClickListener(v ->
+                    Toast.makeText(getContext(), emocion.name(), Toast.LENGTH_SHORT).show());
+            emotionsContainer.addView(emojiText);
+        }
+    }
+
+    private Map<Emocion, String> getEmocionEmojis() {
         Map<Emocion, String> emocionEmojis = new HashMap<>();
         emocionEmojis.put(Emocion.Feliz, "😊");
         emocionEmojis.put(Emocion.Triste, "😢");
@@ -196,15 +217,6 @@ public class EstadisticasFragment extends Fragment {
         emocionEmojis.put(Emocion.Ansioso, "😲");
         emocionEmojis.put(Emocion.Irritable, "😤");
         emocionEmojis.put(Emocion.Emocionado, "😃");
-
-        emotionsContainer.removeAllViews();
-        for (Emocion emocion : Emocion.values()) {
-            TextView emojiText = new TextView(requireContext());
-            emojiText.setText(emocionEmojis.getOrDefault(emocion, "😐"));
-            emojiText.setTextSize(24);
-            emojiText.setOnClickListener(v ->
-                    Toast.makeText(getContext(), emocion.name(), Toast.LENGTH_SHORT).show());
-            emotionsContainer.addView(emojiText);
-        }
+        return emocionEmojis;
     }
 }

@@ -51,4 +51,5 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
     implementation "com.google.android.material:material:1.9.0"
     implementation 'com.github.PhilJay:MPAndroidChart:3.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 }

@@ -15,19 +15,24 @@
         android:background="#E8F5E9" />
 
     <!-- Contenedor para los emojis -->
-    <HorizontalScrollView
+    <LinearLayout
+        android:id="@+id/emotions_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp">
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="16dp" />
 
-        <LinearLayout
-            android:id="@+id/emotions_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="8dp" />
-    </HorizontalScrollView>
+    <!-- Mensaje debajo de los emojis -->
+    <TextView
+        android:id="@+id/emociones_mensaje"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Arriba se muestra un gráfico de tus últimas emociones"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:textColor="#000"
+        android:layout_marginTop="8dp" />
 
     <!-- CalendarView para las emociones por día -->
     <CalendarView
